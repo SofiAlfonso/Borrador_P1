@@ -31,28 +31,39 @@ void Lista_DL:: recorrer()
    if(this->head)
    {
        Nodo*actual= this->head;
+       Nodo* EventoA= NULL;
+       Nodo* EventoB=NULL;
+       Nodo* EventoC=NULL;
        while(actual->getpfuturo())
        {
            bool TipoA= actual-> ETA(actual);
            if(TipoA)
            {
-               cout<<"se encontro un evento Tipo A"<<endl;
-               Nodo* EventoA= actual;
+               cout<<"se encontro un evento Tipo A"<< actual->getnum()<<endl;
+               EventoA= actual;
                actual= actual->getpfuturo();
                while(actual->getpfuturo())
                {
+                   if(EventoC!=NULL)
+                   {
+                       EventoA=NULL;
+                       EventoB=NULL;
+                       EventoC=NULL;
+                       break;
+                   }
                    bool TipoB= actual->ETB(actual);
                    if (TipoB)
                    {
-                       Nodo* EventoB= actual;
-                       cout<<"se encontro un evento Tipo B"<<endl;
+                       EventoB= actual;
+                       cout<<"se encontro un evento Tipo B"<< actual->getnum()<<endl;
                        actual= actual->getpfuturo();
                        while(actual->getpfuturo())
                        {
                            bool TipoC= actual->ETC(actual,EventoA);
                            if(TipoC)
                            {
-                               cout<<"Se encontro un evento Tipo C"<<endl;
+                               EventoC= actual;
+                               cout<<"Se encontro un evento Tipo C"<< actual->getnum()<<endl;
                                cout<<"Ha ocurrido una singularidad"<<endl;
                                break;
                            }
@@ -67,7 +78,6 @@ void Lista_DL:: recorrer()
                    {
                        actual= actual->getpfuturo();
                    }
-                   break;
                }
            }
            else
