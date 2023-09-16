@@ -36,6 +36,9 @@ void Lista_DL:: recorrer()
        Nodo* EventoA= NULL;
        Nodo* EventoB=NULL;
        Nodo* EventoC=NULL;
+       int contadorA=0;
+       int contadorB=0;
+       int contadorC= 0;
        int contador= 0;
 
        // Recorremos la lista hasta el final
@@ -45,7 +48,8 @@ void Lista_DL:: recorrer()
            bool TipoA= actual-> ETA(actual);
            if(TipoA)
            {
-               cout<<"se encontro un evento Tipo A:"<< actual->getnum()<<endl;
+               contadorA ++;
+               cout<<"se encontro un evento Tipo A: "<< actual->getnum()<<endl;
                cout<<"["<<actual->getcientifico()<< "|"<<actual->getnum()<< "]->"<<endl;
                cout<<"__________________________________________________________"<< endl;
                EventoA= actual;
@@ -67,6 +71,7 @@ void Lista_DL:: recorrer()
                    bool TipoB= actual->ETB(actual);
                    if (TipoB)
                    {
+                       contadorB ++;
                        EventoB= actual;
                        cout<<"se encontro un evento Tipo B: "<< actual->getnum()<<endl;
                        cout<<"["<<EventoA->getcientifico()<< "|"<<EventoA->getnum()<< "]->";
@@ -81,9 +86,19 @@ void Lista_DL:: recorrer()
                            bool TipoC= actual->ETC(actual,EventoA);
                            if(TipoC)
                            {
+                               contadorC++;
                                EventoC= actual;
+                               bool primo= actual->primo(actual->getnum());
                                cout<<"Se encontro un evento Tipo C: "<< actual->getnum()<<endl;
                                cout<<"Ha ocurrido una singularidad"<<endl;
+                               if(primo)
+                               {
+                                   cout<<"El cientifico "<< "["<<EventoB->getcientifico()<< "|"<<EventoB->getnum()<< "] " << "pudo entregarle informacion al cientifico "<<"["<<EventoA->getcientifico()<< "|"<<EventoA->getnum()<< "]"<< endl;
+                               }
+                               else
+                               {
+                                   cout<<"El cientifico "<< "["<<EventoB->getcientifico()<< "|"<<EventoB->getnum()<< "] " << "Solo pudo observar al cientifico "<<"["<<EventoA->getcientifico()<< "|"<<EventoA->getnum()<< "]"<< endl;
+                               }
                                cout<<"["<<EventoA->getcientifico()<< "|"<<EventoA->getnum()<< "]->";
                                cout<<"["<<EventoB->getcientifico()<< "|"<<EventoB->getnum()<< "]->";
                                cout<<"["<<actual->getcientifico()<< "|"<<actual->getnum()<< "]"<<endl;
@@ -114,6 +129,7 @@ void Lista_DL:: recorrer()
            }
        }
        cout<<"El recorrido ha acabado. Con un total de "<< contador<<" Nodos"<<endl;
+       cout<<"Se encontraron: "<<"\n"<< "-"<< contadorA<< " Eventos A."<<"\n"<< "-"<< contadorB<< " Eventos B."<<"\n"<< "-"<< contadorC<< " Eventos C."<<endl;
    }
    else
    {
@@ -126,15 +142,22 @@ void Lista_DL:: recorrer()
 //Mostrar
 void Lista_DL:: mostrar()
 {
+    int contador=0;
     if (head)
     {
+        contador=1;
         Nodo* actual = head;
         do
         {
             cout<< "["<<actual->getcientifico()<< "|"<<actual->getnum()<< "]->";
+            if (contador%10==0)
+            {
+                cout <<' '<<endl;
+            }
             actual= actual->getpfuturo();
+            contador++;
 
-        }while(actual);
+        }while(actual->getpfuturo());
         cout<<"END"<<endl;
     }
     else
