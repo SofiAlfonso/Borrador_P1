@@ -137,8 +137,6 @@ void Lista_DL:: recorrer()
    {
        cout<<"Lo siento, la lista de eventos está vacía"<<endl;
    }
-
-
 }
 
 //Mostrar
