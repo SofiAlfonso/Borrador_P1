@@ -61,7 +61,6 @@ void Nodo:: setpfuturo(Nodo* pfuturo)
 
 
 //  Verificacion de eventos
-
 bool Nodo:: primo(int num)
 {
     bool retorno= true;
@@ -76,6 +75,7 @@ bool Nodo:: primo(int num)
 
     return retorno;
 }
+
 bool Nodo:: coprimo(int a, int b)
 {
     bool retorno= true;
@@ -114,7 +114,6 @@ bool Nodo:: ETA(Nodo* actual)
         }
 
     }
-
     return retorno;
 }
 
@@ -148,5 +147,4 @@ bool Nodo:: ETC (Nodo* actual, Nodo*EventoA)
         retorno= true;
     }
     return retorno;
-
 }

@@ -25,27 +25,40 @@ void Lista_DL::sethead(Nodo* head)
     this->head= head;
 }
 
-//Recorrer
+//Recorreremos la lista para encontrar los eventos y las singularidades
 void Lista_DL:: recorrer()
 {
+    //Comprobamos que la lista no este vacía
    if(this->head)
    {
+       //Establecemos los nodos a usar
        Nodo*actual= this->head;
        Nodo* EventoA= NULL;
        Nodo* EventoB=NULL;
        Nodo* EventoC=NULL;
-       while(actual->getpfuturo())
+       int contador= 0;
+
+       // Recorremos la lista hasta el final
+       while(actual)
        {
+           //Buscamos un evento tipo A
            bool TipoA= actual-> ETA(actual);
            if(TipoA)
            {
-               cout<<"se encontro un evento Tipo A"<< actual->getnum()<<endl;
+               cout<<"se encontro un evento Tipo A:"<< actual->getnum()<<endl;
+               cout<<"["<<actual->getcientifico()<< "|"<<actual->getnum()<< "]->"<<endl;
+               cout<<"__________________________________________________________"<< endl;
                EventoA= actual;
                actual= actual->getpfuturo();
-               while(actual->getpfuturo())
+               contador ++;
+
+               //Recorremos la lista desde el evento A encontrado hasta hallar uno B
+               while(actual)
                {
+                   //Comprobamos que ya no haya encontrado un evento tipo C (Para saber si debo volver a buscar uno tipo A)
                    if(EventoC!=NULL)
                    {
+                       //Seteamos los eventos a Null, pues ahora voy a buscar si hay otra singularidad en la lista, desde el evento C donde terminé
                        EventoA=NULL;
                        EventoB=NULL;
                        EventoC=NULL;
@@ -55,21 +68,34 @@ void Lista_DL:: recorrer()
                    if (TipoB)
                    {
                        EventoB= actual;
-                       cout<<"se encontro un evento Tipo B"<< actual->getnum()<<endl;
+                       cout<<"se encontro un evento Tipo B: "<< actual->getnum()<<endl;
+                       cout<<"["<<EventoA->getcientifico()<< "|"<<EventoA->getnum()<< "]->";
+                       cout<<"["<<actual->getcientifico()<< "|"<<actual->getnum()<< "]->"<<endl;
+                       cout<<"__________________________________________________________"<< endl;
                        actual= actual->getpfuturo();
-                       while(actual->getpfuturo())
+                       contador ++;
+
+                       //Buscamos un evento tipo C
+                       while(actual)
                        {
                            bool TipoC= actual->ETC(actual,EventoA);
                            if(TipoC)
                            {
                                EventoC= actual;
-                               cout<<"Se encontro un evento Tipo C"<< actual->getnum()<<endl;
+                               cout<<"Se encontro un evento Tipo C: "<< actual->getnum()<<endl;
                                cout<<"Ha ocurrido una singularidad"<<endl;
+                               cout<<"["<<EventoA->getcientifico()<< "|"<<EventoA->getnum()<< "]->";
+                               cout<<"["<<EventoB->getcientifico()<< "|"<<EventoB->getnum()<< "]->";
+                               cout<<"["<<actual->getcientifico()<< "|"<<actual->getnum()<< "]"<<endl;
+                               cout<<"__________________________________________________________"<< endl;
+                               //Salimos del ciclo al encontrarlo, para volver a buscar uno tipo A en lo que queda de la lista
                                break;
                            }
+                           //Todos los else me ayudan a ir al siguiente nodo cuando el actual no cumple con ser un evento del que estoy buscando
                            else
                            {
                                actual= actual->getpfuturo();
+                               contador ++;
                            }
 
                        }
@@ -77,15 +103,17 @@ void Lista_DL:: recorrer()
                    else
                    {
                        actual= actual->getpfuturo();
+                       contador ++;
                    }
                }
            }
            else
            {
                actual= actual->getpfuturo();
+               contador ++;
            }
        }
-       cout<<"El recorrido ha acabado."<<endl;
+       cout<<"El recorrido ha acabado. Con un total de "<< contador<<" Nodos"<<endl;
    }
    else
    {
