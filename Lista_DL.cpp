@@ -26,7 +26,64 @@ void Lista_DL::sethead(Nodo* head)
 }
 
 //Recorrer
-void recorrer();
+void Lista_DL:: recorrer()
+{
+   if(this->head)
+   {
+       Nodo*actual= this->head;
+       while(actual->getpfuturo())
+       {
+           bool TipoA= actual-> ETA(actual);
+           if(TipoA)
+           {
+               cout<<"se encontro un evento Tipo A"<<endl;
+               Nodo* EventoA= actual;
+               actual= actual->getpfuturo();
+               while(actual->getpfuturo())
+               {
+                   bool TipoB= actual->ETB(actual);
+                   if (TipoB)
+                   {
+                       Nodo* EventoB= actual;
+                       cout<<"se encontro un evento Tipo B"<<endl;
+                       actual= actual->getpfuturo();
+                       while(actual->getpfuturo())
+                       {
+                           bool TipoC= actual->ETC(actual,EventoA);
+                           if(TipoC)
+                           {
+                               cout<<"Se encontro un evento Tipo C"<<endl;
+                               cout<<"Ha ocurrido una singularidad"<<endl;
+                               break;
+                           }
+                           else
+                           {
+                               actual= actual->getpfuturo();
+                           }
+
+                       }
+                   }
+                   else
+                   {
+                       actual= actual->getpfuturo();
+                   }
+                   break;
+               }
+           }
+           else
+           {
+               actual= actual->getpfuturo();
+           }
+       }
+       cout<<"El recorrido ha acabado"<<endl;
+   }
+   else
+   {
+       cout<<"Lo siento, la lista de eventos está vacía"<<endl;
+   }
+
+
+}
 
 //Mostrar
 void Lista_DL:: mostrar()
@@ -46,16 +103,13 @@ void Lista_DL:: mostrar()
     {
         cout<<"No hay elementos en la lista"<<endl;
     }
-
-
-
 }
 
 //crear lista aleatoriamente
 void Lista_DL:: crear()
 {
     srand(time(NULL));
-    string cien="";
+    char cien= NULL;
 
     for (int i=1; i<23;i++ )
     {
@@ -64,11 +118,11 @@ void Lista_DL:: crear()
         int eleccion= 1+ rand()%(2);
         if (eleccion==1)
         {
-            cien= "E";
+            cien= 'E';
         }
         else
         {
-            cien= "R";
+            cien= 'R';
         }
 
         nuevo->setcientifico(cien);

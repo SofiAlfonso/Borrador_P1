@@ -4,7 +4,6 @@
 
 #ifndef BORRADOR_P1_NODO_H
 #define BORRADOR_P1_NODO_H
-#include <string>
 #include <iostream>
 #include <stdlib.h>
 
@@ -14,7 +13,7 @@ class Nodo
 {
 private:
 
-    string cientifico;
+    char cientifico;
     int num;
     Nodo* ppasado;
     Nodo* pfuturo;
@@ -23,20 +22,26 @@ public:
 
     //constructores
     Nodo();
-    Nodo(int num, string cientifico, Nodo* ppasado, Nodo* pfuturo);
+    Nodo(int num, char cientifico, Nodo* ppasado, Nodo* pfuturo);
 
     //Getters
-    string getcientifico();
+    char getcientifico();
     int getnum();
     Nodo* getppasado();
     Nodo* getpfuturo();
 
     //Setters
-    void setcientifico(string cientifico);
+    void setcientifico(char cientifico);
     void setnum(int num);
     void setppasado(Nodo* ppasado);
     void setpfuturo(Nodo* pfuturo);
 
+    // Verificación de eventos
+    bool primo(int num);
+    bool coprimo(int a, int b);
+    bool ETA(Nodo* actual);
+    bool ETB(Nodo*actual);
+    bool ETC (Nodo* actual, Nodo*EventoA);
 
 
 
