@@ -40,8 +40,7 @@ public:
     bool primo(int num);
     bool coprimo(int a, int b);
     bool ETA(Nodo* actual);
-    bool ETB(Nodo*actual);
-    bool ETC (Nodo* actual, Nodo*EventoA);
+
 
 
 

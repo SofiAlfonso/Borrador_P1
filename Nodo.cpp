@@ -72,30 +72,15 @@ bool Nodo:: primo(int num)
             break;
         }
     }
-
     return retorno;
 }
 
 bool Nodo:: coprimo(int a, int b)
 {
     bool retorno= true;
-    int mayor=0;
-    if (a>=b)
+    if (a%b==0)
     {
-        mayor=a;
-    }
-    else
-    {
-        mayor=b;
-    }
-
-    for (int i=2; i<=mayor;i++)
-    {
-        if(a%i==0 && b%i==0)
-        {
-            retorno= false;
-            break;
-        }
+        retorno=false;
     }
     return retorno;
 }
@@ -113,38 +98,6 @@ bool Nodo:: ETA(Nodo* actual)
            retorno= true;
         }
 
-    }
-    return retorno;
-}
-
-  //Evento tipo B
-bool Nodo:: ETB(Nodo* actual)
-{
-    bool primo= actual->primo(actual->getnum());
-    bool retorno=false;
-    if (primo)
-    {
-       retorno= true;
-    }
-
-    return retorno;
-}
-
- //Evento tipo C
-bool Nodo:: ETC (Nodo* actual, Nodo*EventoA)
-{
-    bool retorno= false;
-    int a= actual->getnum();
-    int b= EventoA->getnum();
-    bool primo= actual->primo(a);
-    bool coprimo= actual->coprimo(a,b);
-    if (primo)
-    {
-        retorno= true;
-    }
-    else if (coprimo)
-    {
-        retorno= true;
     }
     return retorno;
 }

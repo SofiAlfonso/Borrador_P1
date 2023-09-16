@@ -15,7 +15,7 @@ Lista_DL::Lista_DL()
     this-> head= NULL;
 }
 
-//Get
+//Get y set
 Nodo* Lista_DL:: gethead()
 {
     return this-> head;
@@ -31,7 +31,7 @@ void Lista_DL:: recorrer()
     //Comprobamos que la lista no este vacía
    if(this->head)
    {
-       //Establecemos los nodos a usar
+       //Establecemos los nodos y variables a usar
        Nodo*actual= this->head;
        Nodo* EventoA= NULL;
        Nodo* EventoB=NULL;
@@ -41,7 +41,7 @@ void Lista_DL:: recorrer()
        int contadorC= 0;
        int contador= 0;
 
-       // Recorremos la lista hasta el final
+       // Recorremos la lista hasta el final o hasta encontrar un evento A
        while(actual)
        {
            //Buscamos un evento tipo A
@@ -49,7 +49,7 @@ void Lista_DL:: recorrer()
            if(TipoA)
            {
                contadorA ++;
-               cout<<"se encontro un evento Tipo A: "<< actual->getnum()<<endl;
+               cout<<"se encontro un evento Tipo A: "<< actual->getnum()<< " /En el nodo: "<<contador+1<<endl;
                cout<<"["<<actual->getcientifico()<< "|"<<actual->getnum()<< "]->"<<endl;
                cout<<"__________________________________________________________"<< endl;
                EventoA= actual;
@@ -68,12 +68,12 @@ void Lista_DL:: recorrer()
                        EventoC=NULL;
                        break;
                    }
-                   bool TipoB= actual->ETB(actual);
+                   bool TipoB= actual->primo(actual->getnum());
                    if (TipoB)
                    {
                        contadorB ++;
                        EventoB= actual;
-                       cout<<"se encontro un evento Tipo B: "<< actual->getnum()<<endl;
+                       cout<<"se encontro un evento Tipo B: "<< actual->getnum()<<" /En el nodo: "<<contador+1<<endl;
                        cout<<"["<<EventoA->getcientifico()<< "|"<<EventoA->getnum()<< "]->";
                        cout<<"["<<actual->getcientifico()<< "|"<<actual->getnum()<< "]->"<<endl;
                        cout<<"__________________________________________________________"<< endl;
@@ -83,15 +83,15 @@ void Lista_DL:: recorrer()
                        //Buscamos un evento tipo C
                        while(actual)
                        {
-                           bool TipoC= actual->ETC(actual,EventoA);
+                           bool TipoC= actual->coprimo(actual->getnum(),EventoA->getnum());
                            if(TipoC)
                            {
                                contadorC++;
                                EventoC= actual;
-                               bool primo= actual->primo(actual->getnum());
-                               cout<<"Se encontro un evento Tipo C: "<< actual->getnum()<<endl;
+                               cout<<"Se encontro un evento Tipo C: "<< actual->getnum()<<" /En el nodo: "<<contador+1<<endl;
                                cout<<"Ha ocurrido una singularidad"<<endl;
-                               if(primo)
+                               bool primo= actual->primo(actual->getnum());
+                               if(primo && EventoA->getcientifico()=='E' || primo && EventoB->getcientifico()!='R')
                                {
                                    cout<<"El cientifico "<< "["<<EventoB->getcientifico()<< "|"<<EventoB->getnum()<< "] " << "pudo entregarle informacion al cientifico "<<"["<<EventoA->getcientifico()<< "|"<<EventoA->getnum()<< "]"<< endl;
                                }
@@ -103,6 +103,8 @@ void Lista_DL:: recorrer()
                                cout<<"["<<EventoB->getcientifico()<< "|"<<EventoB->getnum()<< "]->";
                                cout<<"["<<actual->getcientifico()<< "|"<<actual->getnum()<< "]"<<endl;
                                cout<<"__________________________________________________________"<< endl;
+                               actual= actual->getpfuturo();
+                               contador++;
                                //Salimos del ciclo al encontrarlo, para volver a buscar uno tipo A en lo que queda de la lista
                                break;
                            }
@@ -158,7 +160,7 @@ void Lista_DL:: mostrar()
             contador++;
 
         }while(actual->getpfuturo());
-        cout<<"END"<<endl;
+        cout<<"ACTUALIDAD"<<endl;
     }
     else
     {
@@ -174,7 +176,7 @@ void Lista_DL:: crear()
 
     for (int i=1; i<23;i++ )
     {
-        Nodo* nuevo= new Nodo();
+
         int n= 1+ rand()%(101-1);
         int eleccion= 1+ rand()%(2);
         if (eleccion==1)
@@ -185,12 +187,7 @@ void Lista_DL:: crear()
         {
             cien= 'R';
         }
-
-        nuevo->setcientifico(cien);
-        nuevo->setnum(n);
-        nuevo->setpfuturo(this->head);
-        nuevo->setppasado(NULL);
-
+        Nodo* nuevo= new Nodo(n,cien,NULL,this->head);
         this->head= nuevo;
         if(head->getpfuturo())
         {

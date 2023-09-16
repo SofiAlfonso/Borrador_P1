@@ -16,7 +16,7 @@ public:
     //Constructor
     Lista_DL();
 
-    //Get
+    //Get y set
     Nodo* gethead();
     void sethead(Nodo* head);
 
