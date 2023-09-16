@@ -85,7 +85,7 @@ void Lista_DL:: recorrer()
                actual= actual->getpfuturo();
            }
        }
-       cout<<"El recorrido ha acabado"<<endl;
+       cout<<"El recorrido ha acabado."<<endl;
    }
    else
    {
